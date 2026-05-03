@@ -31,6 +31,30 @@ The core principle: **replace, don't layer.**
 - Tests assert on observable outcomes through the public interface, not internal state
 - Tests should survive internal refactors — they describe behavior, not implementation
 
+## Architecture Friction Score
+
+Score the current repo state from **0 to 100**, where **100 means no meaningful architectural friction** and **0 means severe friction that blocks safe change**. The score should communicate significance before implementation begins, not create false precision.
+
+Use this rubric:
+
+- **90-100**: Architecture is deep, local, and easy to test. Improvements are polish or isolated cleanup.
+- **75-89**: Healthy architecture with some shallow modules or awkward seams. Deepening opportunities are useful but not urgent.
+- **60-74**: Noticeable friction. Understanding common changes requires bouncing across modules, and tests do not always match real behavior.
+- **40-59**: High friction. Important concepts are spread across shallow modules, seams leak implementation detail, and changes carry integration risk.
+- **20-39**: Severe friction. Callers coordinate too much behavior, boundaries are unclear, and test coverage provides weak safety for refactors.
+- **0-19**: Critical friction. The architecture actively blocks safe change; deepening work should start with the smallest high-confidence seam.
+
+Deduct mainly for:
+
+- Shallow modules whose interfaces are nearly as complex as their implementations
+- Concepts split across many files without a deep owning module
+- Tests that force internal knowledge instead of exercising a stable interface
+- Leaky seams where callers must understand ordering, invariants, or dependency setup
+- Duplicate orchestration logic across callers
+- Hard-to-substitute dependencies that prevent realistic boundary tests
+
+Do not overfit the score to file count, test count, language, or style. A small codebase can have severe friction; a large codebase can score well if concepts are deep and local.
+
 ## Implementation Summary Template
 
 Use this template in the final response after implementing the selected concurrent subset. Do not file it with GitHub.
@@ -41,6 +65,7 @@ Use this template in the final response after implementing the selected concurre
 
 Describe the architectural friction:
 
+- Starting architecture friction score and confidence
 - Which modules are shallow and tightly coupled
 - What integration risk exists in the seams between them
 - Why this makes the codebase harder to navigate and maintain

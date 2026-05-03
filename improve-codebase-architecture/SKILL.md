@@ -5,7 +5,7 @@ description: Explore a codebase to find and implement architecture improvements 
 
 # Improve Codebase Architecture
 
-Explore a codebase like an AI would, surface architectural friction, discover opportunities for improving testability, and implement a compatible subset of module-deepening refactors concurrently with subagents.
+Explore a codebase like an AI would, score current architectural friction, surface opportunities for improving testability, and implement a compatible subset of module-deepening refactors concurrently with subagents.
 
 A **deep module** (John Ousterhout, "A Philosophy of Software Design") has a small interface hiding a large implementation. Deep modules are more testable, more AI-navigable, and let you test at the boundary instead of inside.
 
@@ -23,7 +23,20 @@ Use the Agent tool with subagent_type=Explore to navigate the codebase naturally
 
 The friction you encounter IS the signal.
 
-### 2. Present candidates and choose a concurrent subset
+### 2. Score current architectural friction
+
+Before proposing changes, give the repo's current architecture a score from **0 to 100**, where **100 means no meaningful architectural friction** and **0 means severe friction that blocks safe change**. This score is a judgment call, not a metric dump. Ground it in the exploration evidence and use [REFERENCE.md](REFERENCE.md) for the scoring rubric.
+
+Present the score before the candidate list:
+
+- **Architecture friction score**: `N/100`
+- **Confidence**: low, medium, or high, based on how much of the repo was explored
+- **Main deductions**: the 3-5 biggest sources of friction that lowered the score
+- **What would move the score most**: the deepening opportunities likely to produce the largest improvement
+
+Use the score to calibrate urgency. A low score means prefer fewer, higher-leverage candidates with strong tests. A high score means only implement candidates whose payoff is clearly worth the churn.
+
+### 3. Present candidates and choose a concurrent subset
 
 Present a numbered list of deepening opportunities. For each candidate, show:
 
@@ -37,7 +50,7 @@ Select a subset of candidates that can be implemented simultaneously. Prefer 2-4
 
 If the independent subset is obvious and low-risk, proceed without asking. If there are multiple plausible subsets or a candidate has product/design implications, ask the user which subset to implement.
 
-### 3. Frame each selected problem space
+### 4. Frame each selected problem space
 
 Before spawning implementation subagents, write a concise user-facing explanation of the selected subset:
 
@@ -46,9 +59,9 @@ Before spawning implementation subagents, write a concise user-facing explanatio
 - The dependencies each candidate would need to rely on
 - The verification command each subagent should run for its slice
 
-Show this to the user, then immediately proceed to Step 4. The user reads and thinks about the subset while the subagents work in parallel.
+Show this to the user, then immediately proceed to Step 5. The user reads and thinks about the subset while the subagents work in parallel.
 
-### 4. Implement selected candidates concurrently
+### 5. Implement selected candidates concurrently
 
 Spawn one implementation subagent per selected candidate in parallel using the Agent tool. Each subagent owns exactly one candidate and must make the smallest correct code change for that candidate.
 
@@ -70,7 +83,7 @@ Each implementation subagent must:
 4. Run the assigned verification command.
 5. Return a summary of changed files, the final interface, testing changes, verification result, and any follow-up risk.
 
-### 5. Integrate and verify
+### 6. Integrate and verify
 
 After all subagents finish, review their changes together for conflicts, duplicated abstractions, inconsistent naming, and test overlap. Resolve integration issues directly when they are mechanical. If two candidates made incompatible architecture choices, stop and ask the user which direction to keep.
 
@@ -78,6 +91,7 @@ Run the relevant full verification for the touched area, not only each subagent'
 
 - Implemented candidates
 - Candidates intentionally skipped from the original list and why
+- Starting architecture friction score and expected score movement from the implemented changes
 - Final interface changes
 - Tests added, updated, or removed
 - Verification results
