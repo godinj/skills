@@ -54,6 +54,8 @@ Every ticket carries a `wayfinder:<type>` label, and is either **[HITL](https://
 
 Research is the only exception to *one ticket per session*.
 
+When an investigation stops yielding useful information, evidence challenges an earlier decision, or tickets close while attempts remain blocked at the same stage, the agent calls [reassess](https://aihero.dev/skills-reassess) before dispatching another repair or attempt. The coordinator checks whether the repair evidence supports progress through the actual route, then carries supported revisions through the existing map update process. The planning default, human decisions, claims, and session limits still apply.
+
 ## Common questions
 
 **How is this different from `/grill-with-docs`? Which should I start with?**
@@ -81,7 +83,7 @@ No. Any issue tracker works. GitHub is the best-supported path because its nativ
 This is the sharpest live complaint about wayfinder and it is not resolved. The decomposition one user gave: the verbosity itself causes decision exhaustion, and the length strips out *why* a question is being asked, so you lose the chain from decision to decision as the map gets longer. The verbosity looks like a property of the current set of [models](https://www.aihero.dev/ai-coding-dictionary/model) rather than of the skill, and no fix has landed. Practitioner mitigations in circulation: run a lower [reasoning effort](https://www.aihero.dev/ai-coding-dictionary/effort), and put a plain-language instruction in your global `CLAUDE.md`. Expect to spend real thought here regardless, since the amount of thinking wayfinder demands from you is not a defect but most of what it is for.
 
 **A decision I already closed turned out to be wrong. Do I edit the old ticket or make a new one?**
-There is no official guidance, and the agent's instinct is unhelpful: it tends to design around the bad decision rather than challenge it, so you have to steer manually. What does work is telling wayfinder plainly what changed; it updates the map, revises the affected tickets, and comments on already-closed ones. Scope changes mid-map are recoverable. A map you *designed* to change is a scoping smell.
+Evidence against an earlier decision now triggers [reassess](https://aihero.dev/skills-reassess), so the agent can challenge the route without waiting for you to spot the problem. Supported revisions go through the existing map update process, which updates affected tickets. A change to a human decision comes back to the human, and reassessment alone does not resolve another ticket or redraw the destination. The skill does not prescribe reopening versus replacing an already-closed ticket.
 
 **Where did `decision-mapping` go?**
 It is this skill, renamed to `wayfinder` in v1.1 and invoked as `/wayfinder`. "Decision map" was jargon and was also inaccurate, since only one of the four ticket types is really a decision by itself. The reframe gave the skill one coherent vocabulary (destination, fog of war, frontier, the map) instead of an invented term layered on top. The unit kept the "decision" word, though: a **decision ticket** is what a wayfinder ticket is called, precisely to stop people reading it as an implementation ticket.
@@ -93,6 +95,7 @@ It is this skill, renamed to `wayfinder` in v1.1 and invoked as `/wayfinder`. "D
 - You can look at your tracker and see which tickets are takeable without opening the map, since that is the frontier rendering itself through native blocking.
 - A session resolves one ticket, posts the answer as a resolution comment, closes it, and leaves one line on the map's *Decisions so far*. Then it stops.
 - **Not yet specified** shrinks over time. A patch of fog that graduates into a ticket disappears from that section rather than living in both places.
+- Evidence against a prior decision prompts a reassessment of the route and a concrete next step toward the same destination.
 - When the opening breadth-first grill turns up no fog at all, the skill stops and tells you the effort is small enough to skip the map.
 - The session that finishes the map hands you toward a spec, not a pull request.
 
