@@ -102,6 +102,8 @@ Ruling something out of scope is a scoping act, not a step on the route. When a 
 
 ## Invocation
 
+When an investigation stops producing useful information, evidence challenges a decision the route depends on, or tickets close while attempts remain blocked at the same stage, call the Skill tool with "reassess" before dispatching another repair or attempt. Use the destination and relevant ticket evidence to reassess the route. Carry supported revisions through the map's existing update process, preserving human decisions, claims, and the planning-only default. Reassessment does not resolve additional tickets or change the destination on its own.
+
 Two modes. Either way, **never resolve more than one ticket per session**, with the exception of research tickets.
 
 ### Chart the map
