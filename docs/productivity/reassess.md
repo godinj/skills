@@ -24,7 +24,25 @@ For a reproducible bug that needs a diagnosis workflow, use [diagnosing-bugs](ht
 
 The reassessment stays bounded. When the evidence is inconclusive, it ends by identifying the smallest check that would distinguish the options. Useful work stays in place, and authorized work resumes from the resulting next step.
 
+## How far to step back
+
+The agent briefly orients to the overall goal, then names the narrowest level that can explain the observed pattern and why it chose that level.
+
+| Level | Question |
+| --- | --- |
+| Local tactic | Is this immediate operation or implementation choice useful? |
+| Approach | Does the algorithm, model, or strategy hold up? |
+| Interactions | Do the parts or actors work together as expected? |
+| Problem framing | Are the decomposition, assumed constraints, and architecture appropriate? |
+| Goal | Is the desired outcome and its scope the right target? |
+
+These are choices, not a checklist to complete. Repeated local patches can warrant examining the algorithm; successful repairs followed by repeated campaign failure can warrant examining how actors interact. The agent moves outward when the explanation depends on a broader untested assumption or fixes at the chosen level keep failing. It stops widening when it has a supported explanation or a concrete check that distinguishes the alternatives, then returns to the next useful action.
+
 ## Common questions
+
+**Will every reassessment reopen the whole goal?**
+
+No. The agent chooses a level from the evidence and tells you why, so you can correct its scope. You can also ask it to start at a particular level. Examining the goal or its constraints does not authorize changing them; existing permissions and user decisions still apply.
 
 **What if this used to work before we redesigned it?**
 
@@ -44,6 +62,12 @@ A repair can work in isolation while the broader approach still fails. A test th
 
 The next step is a small check using the existing path. If the uncertainty can only be exposed by a full run, that run is a bounded experiment with a predicted result and a reason to stop repeating it. An external capacity or access block can instead call for restoring a prerequisite or waiting. Reassessment can revisit chosen mechanisms while preserving the required outcome and binding constraints.
 
+**What does a bounded check before another expensive attempt look like?**
+
+The agent follows the next intended advance through the component that must accept its result. After fixing worker startup, for example, the useful advance may be completing the work and admitting it to verification. Existing configuration and source can reveal whether resource limits and output requirements allow that handoff, even when actual consumption still requires a real run.
+
+The check covers cheaply inspectable prerequisites that could change whether or how to proceed. It ends when the attempt is justified or a specific blocker is found, with remaining uncertainty stated. It does not require predicting every later failure or building a new validation framework.
+
 **Can an agent use this during a long-running goal without me asking?**
 
 Yes. Both harnesses allow automatic invocation, and `implement` and `wayfinder` include explicit triggers for calling it. The trigger is stalled progress, contradictory evidence, or a weak connection between current work and the destination. Time spent alone is not a reason to interrupt healthy progress. Changed assumptions and the next step carry forward in the existing work record when updating it is authorized.
@@ -55,9 +79,11 @@ The earlier user-invoked `zoom-out` skill mapped unfamiliar code's modules and c
 ## It's working if
 
 - The agent identifies the original goal separately from the approach it chose.
+- It names the level being reassessed and explains why the observed pattern warrants that scope.
 - It names a specific assumption and shows which results support or challenge it.
 - When an earlier approach worked, it compares actual capabilities and examines added complexity before recommending a smaller goal.
 - When repairs pass but the goal stays stuck, the coordinator explains what should change in the real workflow before the next attempt.
+- Before an expensive attempt, the agent checks whether the next result can be accepted and identifies any remaining uncertainty.
 - You get a clear verdict and a next step whose result will tell you something useful.
 - When the goal is decomposed, each subgoal has an observable result that informs the next action, and an integration check still covers the overall outcome.
 - The agent resumes authorized work without repeatedly reopening the same assessment.
