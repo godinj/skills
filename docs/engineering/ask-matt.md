@@ -16,6 +16,7 @@ You invoke this by typing `/ask-matt`; the agent won't reach for it on its own.
 | A long session and a decision about the [context](https://www.aihero.dev/ai-coding-dictionary/context) | The ordered tree over the five options at a phase boundary |
 | Repeated fixes are not helping, or repair tasks pass while the overall goal stays blocked | [reassess](https://aihero.dev/skills-reassess), which reassesses the approach and evidence for another attempt, then returns a concrete next step to the current flow |
 | A previously working capability has become unreliable after redesign | [reassess](https://aihero.dev/skills-reassess), which compares the earlier working approach and examines introduced complexity before recommending a smaller goal |
+| Failures leave several uncertainties tangled together | [reassess](https://aihero.dev/skills-reassess) can separate them into testable subgoals with an integration check; invoke [to-tickets](https://aihero.dev/skills-to-tickets) if you want tracked execution tickets afterward |
 | A skill you have already picked | Nothing useful. Invoke that skill directly. |
 
 ## Prerequisites
