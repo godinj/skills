@@ -5,7 +5,7 @@ description: Reassess the approach and mental model behind work already underway
 
 # Reassess
 
-Interrupt tunnel vision. Reconstruct the problem from the user's goal and the evidence, then decide whether to continue, adjust, or replace the current approach.
+Interrupt tunnel vision. Reconstruct the problem from the user's goal and the evidence, then decide whether to continue, adjust, or replace the approach, or separate its uncertainties into testable subgoals.
 
 ## When to reach for it
 
@@ -25,7 +25,7 @@ Pause the next local edit or retry while you do one bounded pass:
 1. **Recover the goal.** Read the original request and subsequent user decisions, plus the current spec or map when present. State the required outcome and its success criteria separately from the means chosen to achieve it. In a long effort, distinguish the current step's objective from the overall destination. Treat agent-authored plans as interpretations; if essential context is missing, name the gap rather than reconstructing it as fact.
 2. **Account for progress.** Inspect the relevant work and results. Summarize the current approach, what it has established, and what remains unexplained. Distinguish activity from progress toward the success criteria. Use existing evidence first and fetch only what bears on the questionable assumption.
 3. **Challenge the model.** State the assumption that makes the current approach seem promising and what would disprove it. Check the whole problem's constraints, dependencies, and required behaviour. Identify assumptions shared by repeated failed attempts. Before recommending a smaller goal or further decomposition, distinguish difficulty inherent in the problem from complexity introduced by the solution. Where the evidence warrants it, compare a plausible alternative explanation or approach; include continuing the current approach as a real candidate. Effort already spent is not evidence that an approach is correct.
-4. **Choose the next move.** Decide to continue, adjust, or replace the approach using the evidence. If the evidence cannot distinguish the candidates, choose the smallest check that would change that decision, with the expected observations and a finite stop condition. Run it if it is cheap and already authorized; otherwise leave it as the concrete next step. A missing decision or access can be the next step too.
+4. **Choose the next move.** Decide to continue, adjust, or replace the approach, or decompose tangled uncertainties into testable subgoals using the guidance below. If the evidence cannot distinguish the candidates, choose the smallest check that would change that decision, with the expected observations and a finite stop condition. Run it if it is cheap and already authorized; otherwise leave it as the concrete next step. A missing decision or access can be the next step too.
 
 For example, repeated index changes in an algorithm may share the assumption that advancing a pointer can safely discard candidates. Check that invariant against the problem's inputs before patching another boundary condition. A counterexample can reject the algorithm; evidence that the invariant holds can justify returning to the local bug.
 
@@ -37,7 +37,17 @@ When an earlier approach worked, use it as a comparison:
 - Trace the responsibilities, representations, and handoffs added since then. For each addition implicated in the failure, identify the current requirement and consumer it serves. Look for machinery whose main purpose is supporting other added machinery.
 - Consider restoring or simplifying the working approach alongside repairing the current one. Use a bounded comparison to test the suspected regression while preserving required safeguards; historical success alone does not justify a rollback.
 
-If the goal still combines independent uncertainties, propose the smallest meaningful milestone that separates them. State what it would establish and what remains outstanding. A change to agreed acceptance criteria needs the user's decision; an easier workload must not conceal an unresolved regression.
+## Decompose into testable subgoals
+
+After checking for introduced complexity and a working baseline when available, consider decomposition when failures leave several uncertainties tangled together. Split into the smallest useful set of testable behaviors or questions, rather than defaulting to software modules or more repair tickets. For each subgoal, state:
+
+- What it would establish toward the original goal, including any prerequisite assumptions.
+- The smallest meaningful check and observable success or failure, using existing mechanisms where possible.
+- How the result changes the next decision or action.
+
+Retain a representative integration check: passing subgoals must compose under compatible assumptions and establish the original outcome. State what remains unproved. A smaller workload must not conceal an unresolved regression, and changing agreed acceptance criteria needs the user's decision.
+
+Stop splitting once the next useful check and its dependencies are clear. Resume authorized work from that check. If the user wants the decomposition turned into tracked execution tickets, tell them to run `/to-tickets`, which is user-invoked.
 
 ## Repeated repair cycles
 

@@ -9,3 +9,5 @@ For repeated repair cycles, the coordinator checks whether local repair evidence
 The skill lives in the productivity bucket and includes both harness metadata and human-facing documentation. It retains "zoom out" as a discovery trigger; the removed `zoom-out` skill mapped unfamiliar code rather than reassessing ongoing work.
 
 Before recommending a smaller goal, distinguish inherent problem difficulty from complexity introduced by the solution. Where a working baseline exists, compare representative capabilities and added responsibilities, and consider restoration or simplification without assuming a rollback is warranted. Any proposed smaller milestone names what it proves and leaves outstanding; changes to agreed acceptance criteria remain a user decision.
+
+Allow decomposition into testable subgoals as a reassessment outcome. Each subgoal names its contribution, assumptions, observable check, and resulting decision. Retain an integration check for the original outcome and stop splitting once the next useful check and its dependencies are clear. Users can take the decomposition to `to-tickets` for tracked execution work.

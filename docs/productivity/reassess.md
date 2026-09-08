@@ -1,6 +1,6 @@
 ## What it does
 
-`reassess` reassesses whether work already underway is advancing the user's goal and whether the assumptions behind the approach still hold. It checks the original request against the work and its results, then returns a verdict and one concrete next step.
+`reassess` reassesses whether work already underway is advancing the user's goal and whether the assumptions behind the approach still hold. It checks the original request against the work and its results, then returns a verdict and one concrete next step. When failures leave several uncertainties tangled together, that verdict can include a small decomposition into testable subgoals.
 
 Continuing the current approach is a valid outcome. A change of direction needs evidence, and the user's goal remains the reference point throughout.
 
@@ -32,7 +32,11 @@ That gives the agent a working baseline to investigate. It checks what the earli
 
 **Should the goal just be broken into smaller pieces?**
 
-First, the agent checks whether the difficulty belongs to the problem or was introduced by the solution. If independent uncertainties remain, it can propose a smaller meaningful milestone and explain what that milestone would prove and leave unfinished. Changing agreed acceptance criteria requires your decision. A smaller task must not hide a regression in a capability that previously worked.
+First, the agent checks whether the difficulty belongs to the problem or was introduced by the solution. If uncertainties remain tangled together, it can separate them into testable behaviors or questions. Each subgoal identifies what it establishes, its prerequisite assumptions, the smallest meaningful check, and how the result changes the next action.
+
+For example, an author producing a valid proposal and a reviewer returning usable feedback can be checked separately, then together in a correction cycle. The integration check matters: the pieces must work under compatible assumptions and establish the original outcome. Changing agreed acceptance criteria requires your decision. A smaller task must not hide a regression in a capability that previously worked.
+
+The decomposition ends when the next useful check and its dependencies are clear. If you want tracked execution tickets, invoke [to-tickets](https://aihero.dev/skills-to-tickets) with that result.
 
 **Why are repair tasks finishing while the overall goal stays stuck?**
 
@@ -55,6 +59,7 @@ The earlier user-invoked `zoom-out` skill mapped unfamiliar code's modules and c
 - When an earlier approach worked, it compares actual capabilities and examines added complexity before recommending a smaller goal.
 - When repairs pass but the goal stays stuck, the coordinator explains what should change in the real workflow before the next attempt.
 - You get a clear verdict and a next step whose result will tell you something useful.
+- When the goal is decomposed, each subgoal has an observable result that informs the next action, and an integration check still covers the overall outcome.
 - The agent resumes authorized work without repeatedly reopening the same assessment.
 - A proposed change to your requirements comes back to you as a decision.
 
