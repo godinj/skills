@@ -23,11 +23,27 @@ Long-running work offers useful checkpoints after a meaningful result or before 
 Pause the next local edit or retry while you do one bounded pass:
 
 1. **Recover the goal.** Read the original request and subsequent user decisions, plus the current spec or map when present. State the required outcome and its success criteria separately from the means chosen to achieve it. In a long effort, distinguish the current step's objective from the overall destination. Treat agent-authored plans as interpretations; if essential context is missing, name the gap rather than reconstructing it as fact.
-2. **Account for progress.** Inspect the relevant work and results. Summarize the current approach, what it has established, and what remains unexplained. Distinguish activity from progress toward the success criteria. Use existing evidence first and fetch only what bears on the questionable assumption.
+2. **Account for progress.** Inspect the relevant work and results. Summarize the current approach, what it has established, and what remains unexplained. Distinguish activity from progress toward the success criteria. Use existing evidence first and fetch only what bears on the questionable assumption. Choose and state the assessment level using the guidance below.
 3. **Challenge the model.** State the assumption that makes the current approach seem promising and what would disprove it. Check the whole problem's constraints, dependencies, and required behaviour. Identify assumptions shared by repeated failed attempts. Before recommending a smaller goal or further decomposition, distinguish difficulty inherent in the problem from complexity introduced by the solution. Where the evidence warrants it, compare a plausible alternative explanation or approach; include continuing the current approach as a real candidate. Effort already spent is not evidence that an approach is correct.
-4. **Choose the next move.** Decide to continue, adjust, or replace the approach, or decompose tangled uncertainties into testable subgoals using the guidance below. If the evidence cannot distinguish the candidates, choose the smallest check that would change that decision, with the expected observations and a finite stop condition. Run it if it is cheap and already authorized; otherwise leave it as the concrete next step. A missing decision or access can be the next step too.
+4. **Choose the next move.** Decide to continue, adjust, or replace the approach, or decompose tangled uncertainties into testable subgoals using the guidance below. If the evidence cannot distinguish the candidates, choose the smallest check that would change that decision, with the expected observations and a finite stop condition. Before an expensive attempt, check the next handoff as described below. Run a check if it is cheap and already authorized; otherwise leave it as the concrete next step. A missing decision or access can be the next step too.
 
-For example, repeated index changes in an algorithm may share the assumption that advancing a pointer can safely discard candidates. Check that invariant against the problem's inputs before patching another boundary condition. A counterexample can reject the algorithm; evidence that the invariant holds can justify returning to the local bug.
+## Choose the assessment level
+
+Orient briefly to the overall goal, then locate where the work has been concentrated. Start at the narrowest level that can explain the observed pattern; these are scopes to choose among, not stages to exhaust in order.
+
+| Level | What gets questioned | Example |
+| --- | --- | --- |
+| Local tactic | An immediate operation or implementation choice | Does this condition or retry address the symptom? |
+| Approach | The algorithm, model, or strategy behind those choices | Can advancing this pointer safely discard candidates? |
+| Interactions | How parts, actors, or stages fit together | Does the next actor receive and use the repair's feedback? |
+| Problem framing | The decomposition, assumed constraints, and chosen architecture | Have added responsibilities made the problem unnecessarily difficult? |
+| Goal | The desired outcome, scope, and acceptance criteria | Is this the right first milestone, and what would make it practical? |
+
+Repeated local patches usually warrant examining the approach; successful tasks followed by repeated overall failure warrant examining interactions. Start farther out when the evidence already implicates that level or the user requests it.
+
+State the level and reason in one sentence, for example: "I'm reassessing the author-reviewer interaction because local repairs pass while the campaign repeatedly fails before implementation."
+
+Move outward when an explanation depends on an untested assumption outside the chosen level, or fixes there keep reproducing the same failure. Stop widening once there is a supported explanation or a concrete check that distinguishes the alternatives, then return to the level where the next action belongs. A wider assessment expands what you examine, not your authority to change it.
 
 ## Compare with a working baseline
 
@@ -56,6 +72,14 @@ The coordinating agent owns reassessment across tasks. Before dispatching anothe
 State the next observable advance, the change expected to cause it, and the evidence connecting them. Check what a test supplied versus what the actual person, model, or component must discover or do. A manually corrected input or synthetic judgment can validate a mechanism without establishing that the real actor receives useful feedback and acts on it. A nearby reproduced defect is not necessarily the cause of the observed failure.
 
 Choose the smallest check on the existing path that distinguishes the explanations. If only a full run can expose the uncertainty, make it one bounded experiment with a predicted observation and a result that would make repeating it unjustified. Reconsider agent-selected mechanisms within existing authority while preserving required outcomes and binding constraints. End with a supported next action or a specific decision needed to change course; additional evidence work must serve that decision.
+
+## Check the next handoff
+
+Before an expensive attempt, trace the next intended advance through the consumer that must accept its result. For example, successful worker startup may still leave completed work unable to pass admission because of incompatible resource limits or output requirements.
+
+Inspect only prerequisites that could prevent that advance and are cheap to check using existing configuration, source, retained results, or focused checks. Establish which component enforces each relevant condition and how it interprets the values. The finding must change whether or how to proceed.
+
+Resolve known contradictions within existing authority and name what remains uncertain; some questions require the real attempt. Stop when the next attempt is justified or a specific blocker is identified. Widen only when a directly related dependency requires it. This supports the next action, without requiring proof of every downstream stage or a new validation framework.
 
 ## Return to the work
 
