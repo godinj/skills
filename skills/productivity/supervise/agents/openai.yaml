@@ -1,0 +1,4 @@
+interface:
+  display_name: "Supervise"
+  short_description: "Supervise dedicated desktop tasks through completion"
+  default_prompt: "Use $supervise to drive this task or issue through its acceptance criteria, creating a dedicated desktop thread for each delegated ticket. Ask which worker model and effort to use, with Sol / Medium as the default."
