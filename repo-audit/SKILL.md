@@ -39,9 +39,9 @@ For each package, extract the coverage percentage. Flag any package below 60% co
 
 Read `ARCHITECTURE.md` and verify the repo matches what it describes:
 
-- [ ] **Package map accuracy** — every directory under `internal/` and `cmd/` is listed in the Package Map section; no listed package is missing from disk
-- [ ] **Enforced rules hold** — for each rule marked `[enforced]`, confirm the corresponding constraint exists in `.drem/constraints.toml`
-- [ ] **Grandfathered files shrinking** — for each `shrink-only` exception in `constraints.toml`, check that the current metric (line count, export count, import count) is at or below the baseline
+- [ ] **Package map accuracy**: every directory under `internal/` and `cmd/` is listed in the Package Map section; no listed package is missing from disk
+- [ ] **Enforced rules hold**: for each rule marked `[enforced]`, confirm the corresponding constraint exists in `.drem/constraints.toml`
+- [ ] **Grandfathered files shrinking**: for each `shrink-only` exception in `constraints.toml`, check that the current metric (line count, export count, import count) is at or below the baseline
 
 **Verdict**: PASS if all sub-checks pass, FAIL with specific drift listed.
 
@@ -49,9 +49,9 @@ Read `ARCHITECTURE.md` and verify the repo matches what it describes:
 
 Evaluate module depth across all `internal/` packages:
 
-- [ ] **Export ratio** — for each package, count exported symbols vs total symbols in non-test `.go` files; flag any package exceeding 15% export ratio (unless grandfathered in `constraints.toml`)
-- [ ] **Pass-through functions** — identify functions that simply delegate to another package with no added logic; flag any package with more than 3 pass-throughs (unless grandfathered)
-- [ ] **Interface placement** — check that interfaces are defined at consumption sites, not provider sites (per ARCHITECTURE.md "Interfaces at consumption sites" rule)
+- [ ] **Export ratio**: for each package, count exported symbols vs total symbols in non-test `.go` files; flag any package exceeding 15% export ratio (unless grandfathered in `constraints.toml`)
+- [ ] **Pass-through functions**: identify functions that simply delegate to another package with no added logic; flag any package with more than 3 pass-throughs (unless grandfathered)
+- [ ] **Interface placement**: check that interfaces are defined at consumption sites, not provider sites (per ARCHITECTURE.md "Interfaces at consumption sites" rule)
 
 **Verdict**: PASS if no non-grandfathered violations, FAIL with specific packages listed.
 
@@ -60,9 +60,9 @@ Evaluate module depth across all `internal/` packages:
 Check that user-facing documentation is current:
 
 - [ ] **README.md exists and is non-empty** at repo root
-- [ ] **README sections match repo capabilities** — every package in `internal/` that defines exported types or functions should have a corresponding section or mention in README.md
-- [ ] **docs/ directory** — check that feature documentation in `docs/` covers major subsystems (constraints, scoring, orchestrator, memory, merge)
-- [ ] **No stale references** — grep README.md and docs/ for references to files, functions, or packages that no longer exist
+- [ ] **README sections match repo capabilities**: every package in `internal/` that defines exported types or functions should have a corresponding section or mention in README.md
+- [ ] **docs/ directory**: check that feature documentation in `docs/` covers major subsystems (constraints, scoring, orchestrator, memory, merge)
+- [ ] **No stale references**: grep README.md and docs/ for references to files, functions, or packages that no longer exist
 
 **Verdict**: PASS if docs exist and no stale references found, FAIL with gaps listed.
 
@@ -84,4 +84,4 @@ After the table, list each FAIL dimension with actionable remediation steps.
 
 ## Parallelization
 
-Checks 1, 2, and 5 are independent — run them as parallel agents. Checks 3 and 4 share ARCHITECTURE.md and constraints.toml reads, so run them together in a single agent.
+Checks 1, 2, and 5 are independent, so run them as parallel agents. Checks 3 and 4 share ARCHITECTURE.md and constraints.toml reads, so run them together in a single agent.
