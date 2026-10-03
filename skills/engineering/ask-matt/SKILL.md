@@ -86,6 +86,7 @@ Off the main flow entirely.
 - **`/wait-what`** is the corrective for a message that didn't land. Use it mid-conversation, inside any other skill, and the agent re-pitches what it just said with the context you were missing, in plain English, using the `CONTEXT.md` vocabulary. It works after the fact; `/grill-with-docs` is the upfront cure, because a shared language agreed early is what stops the jargon arriving at all.
 - **`/teach`**: learn a concept over multiple sessions, using the current directory as a stateful workspace.
 - **`/writing-for-agents`** is the reference for writing documents agents consume: skills, AGENTS.md, pointed-at docs.
+- **`/fleet-netbird-onboarding`** (beta, `godinj/skills` fork): establish trustworthy mesh SSH for a new fleet host, or diagnose an enrolled client with missing peers. Check effective policy early, verify independent host trust and real access, and close temporary bootstrap exceptions. Model-invoked; separate from agent runtime and worker setup.
 
 ## Precondition
 
