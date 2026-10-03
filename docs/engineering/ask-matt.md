@@ -18,12 +18,11 @@ You invoke this by typing `/ask-matt`; the agent won't reach for it on its own.
 | Repeated fixes are not helping, or repair tasks pass while the overall goal stays blocked | [reassess](https://aihero.dev/skills-reassess), which selects and explains an assessment level from local tactic to overall goal, checks prerequisites for the next handoff before an expensive attempt, and returns a concrete next step to the current flow |
 | A previously working capability has become unreliable after redesign | [reassess](https://aihero.dev/skills-reassess), which compares the earlier working approach and examines introduced complexity before recommending a smaller goal |
 | Failures leave several uncertainties tangled together | [reassess](https://aihero.dev/skills-reassess) can separate them into testable subgoals with an integration check; invoke [to-tickets](https://aihero.dev/skills-to-tickets) if you want tracked execution tickets afterward |
-| A new fleet host needs trusted NetBird SSH, or enrollment succeeded but peers are missing | The beta [fleet-netbird-onboarding](https://github.com/godinj/skills/blob/main/skills/in-progress/fleet-netbird-onboarding/SKILL.md) skill in the godinj/skills fork, which separates effective policy, host trust, real mesh access and cleanup from later agent setup |
 | A skill you have already picked | Nothing useful. Invoke that skill directly. |
 
 ## Prerequisites
 
-The router names skills; it does not install them. Everything it points at has to be installed for the recommendation to be actionable. It knows the promoted skills in this repo plus the explicitly marked beta fleet-onboarding route in the godinj/skills fork; that beta is not included in the plugin.
+The router names skills; it does not install them. Everything it points at has to be installed for the recommendation to be actionable, and it only knows the promoted skills in this repo.
 
 The tracker-dependent routes (triage, `to-spec`, `to-tickets`, `implement`) assume [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills) has already configured an issue tracker in the repo. The router will happily recommend them before that has happened.
 
